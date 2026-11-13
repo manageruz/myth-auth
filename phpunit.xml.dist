@@ -1,33 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+		xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
 		bootstrap="vendor/codeigniter4/framework/system/Test/bootstrap.php"
 		backupGlobals="false"
-		beStrictAboutCoversAnnotation="true"
 		beStrictAboutOutputDuringTests="true"
 		beStrictAboutTodoAnnotatedTests="true"
+		cacheDirectory="build/.phpunit.cache"
 		colors="true"
-		convertErrorsToExceptions="true"
-		convertNoticesToExceptions="true"
-		convertWarningsToExceptions="true"
 		executionOrder="random"
 		failOnRisky="true"
 		failOnWarning="true"
 		stopOnError="false"
 		stopOnFailure="false"
 		stopOnIncomplete="false"
-		stopOnSkipped="false"
-		verbose="true">
+		stopOnSkipped="false">
 
-	<coverage includeUncoveredFiles="true" processUncoveredFiles="true">
-		<include>
-			<directory suffix=".php">./src/</directory>
-		</include>
-		<exclude>
-			<directory suffix=".php">./src/Config</directory>
-			<directory suffix=".php">./src/Views</directory>
-			<directory suffix=".php">./src/Language</directory>
-		</exclude>
+	<coverage includeUncoveredFiles="true">
 		<report>
 			<clover outputFile="build/phpunit/clover.xml"/>
 			<html outputDirectory="build/phpunit/html"/>
@@ -43,28 +31,24 @@
 		</testsuite>
 	</testsuites>
 
+	<source>
+		<include>
+			<directory suffix=".php">./src/</directory>
+		</include>
+		<exclude>
+			<directory suffix=".php">./src/Config</directory>
+			<directory suffix=".php">./src/Views</directory>
+			<directory suffix=".php">./src/Language</directory>
+		</exclude>
+	</source>
+
 	<extensions>
-		<extension class="Nexus\PHPUnit\Extension\Tachycardia">
-			<arguments>
-				<array>
-					<element key="timeLimit">
-						<double>0.75</double>
-					</element>
-					<element key="reportable">
-						<integer>30</integer>
-					</element>
-					<element key="precision">
-						<integer>2</integer>
-					</element>
-					<element key="collectBare">
-						<boolean>true</boolean>
-					</element>
-					<element key="tabulate">
-						<boolean>true</boolean>
-					</element>
-				</array>
-			</arguments>
-		</extension>
+		<bootstrap class="Nexus\PHPUnit\Tachycardia\TachycardiaExtension">
+			<parameter name="time-limit" value="0.75"/>
+			<parameter name="report-count" value="30"/>
+			<parameter name="precision" value="2"/>
+			<parameter name="format" value="table"/>
+		</bootstrap>
 	</extensions>
 
 	<logging>
