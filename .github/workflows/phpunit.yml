@@ -74,7 +74,7 @@ jobs:
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
 
       - name: Cache composer dependencies
         uses: actions/cache@v4
@@ -92,13 +92,13 @@ jobs:
           fi
 
       - name: Test with PHPUnit (SQLite)
-        run: vendor/bin/phpunit --verbose --coverage-text
+        run: vendor/bin/phpunit --coverage-text
         env:
           TERM: xterm-256color
           TACHYCARDIA_MONITOR_GA: enabled
 
       - name: Test with PHPUnit (MySQL/MariaDB)
-        run: vendor/bin/phpunit --verbose --coverage-text
+        run: vendor/bin/phpunit --coverage-text
         env:
           TERM: xterm-256color
           TACHYCARDIA_MONITOR_GA: enabled
@@ -111,7 +111,7 @@ jobs:
           database.tests.DBPrefix: tests_
 
       - name: Test with PHPUnit (PostgreSQL)
-        run: vendor/bin/phpunit --verbose --coverage-text
+        run: vendor/bin/phpunit --coverage-text
         env:
           TERM: xterm-256color
           TACHYCARDIA_MONITOR_GA: enabled
