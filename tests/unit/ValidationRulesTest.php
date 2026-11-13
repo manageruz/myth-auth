@@ -60,7 +60,8 @@ final class ValidationRulesTest extends CIUnitTestCase
         ];
 
         $request = service('request');
-        $request->setMethod('post')->setGlobal('post', $data);
+        $request->setGlobal('post', $data);
+        $request = $request->withMethod('POST');
 
         $this->validation->setRules([
             'password' => 'strong_password[]',
@@ -80,7 +81,8 @@ final class ValidationRulesTest extends CIUnitTestCase
         ];
 
         $request = service('request');
-        $request->setMethod('patch')->setBody(http_build_query($data));
+        $request->setBody(http_build_query($data));
+        $request = $request->withMethod('PATCH');
 
         $this->validation->setRules([
             'password' => 'strong_password[]',
@@ -100,7 +102,8 @@ final class ValidationRulesTest extends CIUnitTestCase
         ];
 
         $request = service('request');
-        $request->setMethod('post')->setGlobal('post', $data);
+        $request->setGlobal('post', $data);
+        $request = $request->withMethod('POST');
 
         $this->validation->setRules([
             'password' => 'strong_password',
@@ -120,7 +123,8 @@ final class ValidationRulesTest extends CIUnitTestCase
         ];
 
         $request = service('request');
-        $request->setMethod('post')->setGlobal('post', $data);
+        $request->setGlobal('post', $data);
+        $request = $request->withMethod('POST');
 
         $this->validation->setRules([
             'password' => 'strong_password',
@@ -143,7 +147,8 @@ final class ValidationRulesTest extends CIUnitTestCase
         ];
 
         $request = service('request');
-        $request->setMethod('patch')->setBody(http_build_query($data));
+        $request->setBody(http_build_query($data));
+        $request = $request->withMethod('PATCH');
 
         $this->validation->setRules([
             'password' => 'strong_password[]',
