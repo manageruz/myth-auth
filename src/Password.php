@@ -14,25 +14,10 @@ class Password
     {
         $config = config('Auth');
 
-        if (
-            (defined('PASSWORD_ARGON2I') && $config->hashAlgorithm === PASSWORD_ARGON2I)
-            || (defined('PASSWORD_ARGON2ID') && $config->hashAlgorithm === PASSWORD_ARGON2ID)
-        ) {
-            $hashOptions = [
-                'memory_cost' => $config->hashMemoryCost,
-                'time_cost'   => $config->hashTimeCost,
-                'threads'     => $config->hashThreads,
-            ];
-        } else {
-            $hashOptions = [
-                'cost' => $config->hashCost,
-            ];
-        }
-
         return password_hash(
             self::preparePassword($password),
             $config->hashAlgorithm,
-            $hashOptions
+            self::hashOptions($config->hashAlgorithm)
         );
     }
 
@@ -46,13 +31,48 @@ class Password
     }
 
     /**
+     * Checks whether a hash was made with other settings than the current
+     * ones. Without $options it compares against the options from
+     * Config\Auth that hash() uses, not against PHP's defaults (PHP 8.4
+     * raised the default bcrypt cost from 10 to 12, which made every
+     * hash look outdated).
+     *
      * @param string     $hash    Hash
      * @param int|string $algo    Hash algorithm
      * @param array      $options Options
      */
     public static function needsRehash(string $hash, $algo, array $options = []): bool
     {
+        if ($options === []) {
+            $options = self::hashOptions($algo);
+        }
+
         return password_needs_rehash($hash, $algo, $options);
+    }
+
+    /**
+     * Returns the password_hash() options from Config\Auth for an algorithm.
+     *
+     * @param int|string|null $algo Hash algorithm
+     */
+    protected static function hashOptions($algo): array
+    {
+        $config = config('Auth');
+
+        if (
+            (defined('PASSWORD_ARGON2I') && $algo === PASSWORD_ARGON2I)
+            || (defined('PASSWORD_ARGON2ID') && $algo === PASSWORD_ARGON2ID)
+        ) {
+            return [
+                'memory_cost' => $config->hashMemoryCost,
+                'time_cost'   => $config->hashTimeCost,
+                'threads'     => $config->hashThreads,
+            ];
+        }
+
+        return [
+            'cost' => $config->hashCost,
+        ];
     }
 
     /**
