@@ -14,7 +14,7 @@ class GroupFaker extends GroupModel
     public function fake(Generator &$faker): stdClass
     {
         return (object) [
-            'name'        => $faker->word(),
+            'name'        => $faker->word() . '-' . $faker->randomNumber(6, true),
             'description' => $faker->sentence(),
         ];
     }

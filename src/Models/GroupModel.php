@@ -18,7 +18,8 @@ class GroupModel extends Model
         'description',
     ];
     protected $validationRules = [
-        'name'        => 'required|max_length[255]|is_unique[auth_groups.name,name,{name}]',
+        'id'          => 'permit_empty|is_natural_no_zero',
+        'name'        => 'required|max_length[255]|is_unique[auth_groups.name,id,{id}]',
         'description' => 'max_length[255]',
     ];
 
@@ -210,7 +211,7 @@ class GroupModel extends Model
     public function fake(Generator &$faker)
     {
         return new Group([
-            'name'        => $faker->word,
+            'name'        => $faker->word . '-' . $faker->randomNumber(6, true),
             'description' => $faker->sentence,
         ]);
     }
