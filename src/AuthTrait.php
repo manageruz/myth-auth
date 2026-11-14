@@ -8,15 +8,11 @@ trait AuthTrait
 {
     /**
      * Instance of Authentication Class
-     *
-     * @var null
      */
     public $authenticate;
 
     /**
      * Instance of Authorization class
-     *
-     * @var null
      */
     public $authorize;
 

@@ -4,28 +4,22 @@ declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
-use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
-use Rector\CodeQuality\Rector\FuncCall\SimplifyRegexPatternRector;
-use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
-use Rector\CodeQuality\Rector\If_\CombineIfRector;
-use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
-use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
-use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
-use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
+use Rector\Php72\Rector\FuncCall\GetClassOnNullRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
+use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
@@ -35,10 +29,12 @@ use Rector\ValueObject\PhpVersion;
 /*
  * Rector 2 configuration, based on the codeigniter4/devkit template.
  *
- * The rule set deliberately matches the previous Rector 0.14 config
- * (dead code, PHP 7.4 level, the same code-quality rules) so this change
- * only updates the tooling. Moving the code to newer PHP features
- * (LevelSetList::UP_TO_PHP_82, attributes, readonly, ...) is a separate step.
+ * The rule set follows the previous Rector 0.14 config (dead code, PHP 7.4
+ * level, the same code-quality rules), without the rules that Rector 2
+ * deprecated without a replacement (CombineIfRector, ShortenElseIfRector,
+ * SimplifyIfElseToTernaryRector, ...). Moving the code to newer PHP features
+ * (LevelSetList::UP_TO_PHP_82, attributes, readonly, strict types in tests)
+ * is a separate step.
  */
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
@@ -82,6 +78,12 @@ return static function (RectorConfig $rectorConfig): void {
         StringifyStrNeedlesRector::class,
         YieldDataProviderRector::class,
 
+        // Adding strict_types to the tests is a separate modernisation step
+        DeclareStrictTypesTestsRector::class,
+
+        // Rewrites get_class(service(...)) into an awkward null check
+        GetClassOnNullRector::class,
+
         // Changing constructor properties is a BC break for a library
         RemoveUnusedPromotedPropertyRector::class,
 
@@ -91,20 +93,12 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->rule(SimplifyUselessVariableRector::class);
     $rectorConfig->rule(RemoveAlwaysElseRector::class);
-    $rectorConfig->rule(CountArrayToEmptyArrayComparisonRector::class);
-    $rectorConfig->rule(ChangeNestedForeachIfsToEarlyContinueRector::class);
     $rectorConfig->rule(ChangeIfElseValueAssignToEarlyReturnRector::class);
-    $rectorConfig->rule(SimplifyStrposLowerRector::class);
-    $rectorConfig->rule(CombineIfRector::class);
     $rectorConfig->rule(SimplifyIfReturnBoolRector::class);
     $rectorConfig->rule(InlineIfToExplicitIfRector::class);
     $rectorConfig->rule(PreparedValueToEarlyReturnRector::class);
-    $rectorConfig->rule(ShortenElseIfRector::class);
-    $rectorConfig->rule(SimplifyIfElseToTernaryRector::class);
-    $rectorConfig->rule(UnusedForeachValueToArrayKeysRector::class);
     $rectorConfig->rule(ChangeArrayPushToArrayAssignRector::class);
     $rectorConfig->rule(UnnecessaryTernaryExpressionRector::class);
-    $rectorConfig->rule(SimplifyRegexPatternRector::class);
     $rectorConfig->rule(FuncGetArgsToVariadicParamRector::class);
     $rectorConfig->rule(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $rectorConfig->rule(SimplifyEmptyArrayCheckRector::class);

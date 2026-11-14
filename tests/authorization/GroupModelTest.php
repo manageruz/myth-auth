@@ -197,15 +197,17 @@ final class GroupModelTest extends AuthTestCase
         ]);
 
         $cacheUsers = [
-            'group_id' => $group->id,
-            'user_id'  => $user2->id,
-            'email'    => 'gonnaSkip@theOtherProperties.lazy',
+            [
+                'group_id' => $group->id,
+                'user_id'  => $user2->id,
+                'email'    => 'gonnaSkip@theOtherProperties.lazy',
+            ],
         ];
         cache()->save("{$group->id}_users", $cacheUsers, 300);
 
         $result = $this->model->getUsersForGroup($group->id);
 
-        $this->assertSame($result, $cacheUsers);
+        $this->assertSame($cacheUsers, $result);
     }
 
     public function testGetEmptyUsersForGroupFromCache()

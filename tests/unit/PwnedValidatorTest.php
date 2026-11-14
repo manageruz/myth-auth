@@ -36,9 +36,7 @@ final class PwnedValidatorTest extends CIUnitTestCase
         $response = service('response', null, false);
         $response->setBody($body);
 
-        $curlrequest = $this->getMockBuilder('CodeIgniter\HTTP\CURLRequest')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlrequest = $this->createMock('CodeIgniter\HTTP\CURLRequest');
 
         $curlrequest->method('get')->willReturn($response);
 
@@ -56,9 +54,7 @@ final class PwnedValidatorTest extends CIUnitTestCase
         $response = service('response', null, false);
         $response->setBody($body);
 
-        $curlrequest = $this->getMockBuilder('CodeIgniter\HTTP\CURLRequest')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlrequest = $this->createMock('CodeIgniter\HTTP\CURLRequest');
 
         $curlrequest->method('get')->willReturn($response);
 
@@ -83,9 +79,7 @@ final class PwnedValidatorTest extends CIUnitTestCase
         $response = service('response', null, false);
         $response->setBody($body);
 
-        $curlrequest = $this->getMockBuilder('CodeIgniter\HTTP\CURLRequest')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlrequest = $this->createMock('CodeIgniter\HTTP\CURLRequest');
 
         $curlrequest->method('get')->willReturn($response);
 
@@ -98,15 +92,13 @@ final class PwnedValidatorTest extends CIUnitTestCase
 
     public function testCheckCatchesAndRethrowsCurlExceptionAsAuthException()
     {
-        $curlrequest = $this->getMockBuilder('CodeIgniter\HTTP\CURLRequest')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $curlrequest = $this->createMock('CodeIgniter\HTTP\CURLRequest');
 
         $curlrequest->method('get')
-            ->will($this->throwException(HTTPException::forCurlError(
+            ->willThrowException(HTTPException::forCurlError(
                 '7',
                 'Failed to connect',
-            )));
+            ));
         Services::injectMock('curlrequest', $curlrequest);
 
         $this->expectException(AuthException::class);

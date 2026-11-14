@@ -19,7 +19,7 @@ class AuthenticationBase
     protected $user;
 
     /**
-     * @var Model
+     * @var Model|null
      */
     protected $userModel;
 

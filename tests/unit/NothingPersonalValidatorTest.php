@@ -199,6 +199,9 @@ final class NothingPersonalValidatorTest extends CIUnitTestCase
 
     public static function provideMaxSimilarityZeroTurnsOffSimilarityCalculation(): iterable
     {
-        return [[66, false], [0, true]];
+        return [
+            [66, false],
+            [0, true],
+        ];
     }
 }
