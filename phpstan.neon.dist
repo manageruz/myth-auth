@@ -17,6 +17,10 @@ parameters:
 		- '#Call to an undefined method .+::shouldReceive\(\)#'
 		- '#Call to an undefined static method Config\\Services::[A-Za-z]+\(\)#'
 		- '#Cannot access property [\$a-z_]+ on (array|object)#'
+		# AuthTrait is public API for applications; the library itself does not use it
+		-
+			identifier: trait.unused
+			path: src/AuthTrait.php
 	universalObjectCratesClasses:
 		- CodeIgniter\Entity\Entity
 		- Faker\Generator

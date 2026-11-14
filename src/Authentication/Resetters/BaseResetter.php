@@ -19,8 +19,6 @@ abstract class BaseResetter
 
     /**
      * Sends a reset message to user
-     *
-     * @param User $user
      */
     abstract public function send(?User $user = null): bool;
 

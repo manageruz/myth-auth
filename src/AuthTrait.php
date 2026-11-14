@@ -37,8 +37,6 @@ trait AuthTrait
     /**
      * Verifies that a user is logged in
      *
-     * @param string $uri
-     *
      * @return bool
      *
      * @throws RedirectException
@@ -116,8 +114,8 @@ trait AuthTrait
      * the user to the URI set in $url or the site root, and attempt
      * to set a status message.
      *
-     * @param int|int[]|string|string[] $permissions
-     * @param string                    $uri         The URI to redirect to on fail.
+     * @param int|list<int>|list<string>|string $permissions
+     * @param string                            $uri         The URI to redirect to on fail.
      *
      * @return bool
      *

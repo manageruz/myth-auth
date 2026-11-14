@@ -17,8 +17,6 @@ class DictionaryValidator extends BaseValidator implements ValidatorInterface
      * if a match is found. Returns true if no match is found.
      * If true is returned the password will be passed to next validator.
      * If false is returned the validation process will be immediately stopped.
-     *
-     * @param Entity $user
      */
     public function check(string $password, ?Entity $user = null): bool
     {

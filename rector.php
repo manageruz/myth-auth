@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
@@ -49,12 +48,6 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->parallel();
-
-    // GitHub Actions cache
-    $rectorConfig->cacheClass(FileCacheStorage::class);
-    if (is_dir('/tmp')) {
-        $rectorConfig->cacheDirectory('/tmp/rector');
-    }
 
     // The paths to refactor (can also be supplied with CLI arguments)
     $rectorConfig->paths([

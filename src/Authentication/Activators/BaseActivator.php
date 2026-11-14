@@ -19,8 +19,6 @@ abstract class BaseActivator
 
     /**
      * Sends an activation message to user
-     *
-     * @param User $user
      */
     abstract public function send(?User $user = null): bool;
 
