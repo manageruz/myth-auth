@@ -108,7 +108,7 @@ final class LoginTest extends AuthTestCase
         $this->assertSame($remembering, $result->response()->hasCookie('remember'));
     }
 
-    public function rememberMeProvider()
+    public static function rememberMeProvider()
     {
         return [
             [true],

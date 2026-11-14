@@ -1,6 +1,6 @@
 <?php
 
-use CodeIgniter\Router\Exceptions\RedirectException;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 use Myth\Auth\Authentication\LocalAuthenticator;
 use Myth\Auth\Config\Services;
 use Myth\Auth\Exceptions\AuthException;

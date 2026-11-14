@@ -2,7 +2,7 @@
 
 namespace Myth\Auth;
 
-use CodeIgniter\Router\Exceptions\RedirectException;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 
 trait AuthTrait
 {

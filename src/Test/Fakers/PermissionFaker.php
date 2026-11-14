@@ -13,7 +13,7 @@ class PermissionFaker extends PermissionModel
     public function fake(Generator &$faker): array
     {
         return [
-            'name'        => $faker->word(),
+            'name'        => $faker->word() . '-' . $faker->randomNumber(6, true),
             'description' => $faker->sentence(),
         ];
     }
