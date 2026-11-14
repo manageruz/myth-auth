@@ -198,8 +198,8 @@ final class GroupModelTest extends AuthTestCase
 
         $cacheUsers = [
             [
-                'group_id' => $group->id,
-                'user_id'  => $user2->id,
+                'group_id' => (int) $group->id,
+                'user_id'  => (int) $user2->id,
                 'email'    => 'gonnaSkip@theOtherProperties.lazy',
             ],
         ];
