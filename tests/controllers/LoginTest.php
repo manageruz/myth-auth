@@ -6,6 +6,7 @@ use Config\Services;
 use Config\Validation;
 use Myth\Auth\Authentication\Passwords\ValidationRules;
 use Myth\Auth\Controllers\AuthController;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Support\AuthTestCase;
 
 /**
@@ -65,9 +66,7 @@ final class LoginTest extends AuthTestCase
         $this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
     }
 
-    /**
-     * @dataProvider rememberMeProvider
-     */
+    #[DataProvider('provideAttemptLoginSuccess')]
     public function testAttemptLoginSuccess(bool $remembering)
     {
         // Create user
@@ -108,7 +107,7 @@ final class LoginTest extends AuthTestCase
         $this->assertSame($remembering, $result->response()->hasCookie('remember'));
     }
 
-    public static function rememberMeProvider()
+    public static function provideAttemptLoginSuccess(): iterable
     {
         return [
             [true],

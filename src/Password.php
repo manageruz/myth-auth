@@ -17,7 +17,7 @@ class Password
         return password_hash(
             self::preparePassword($password),
             $config->hashAlgorithm,
-            self::hashOptions($config->hashAlgorithm)
+            self::hashOptions($config->hashAlgorithm),
         );
     }
 

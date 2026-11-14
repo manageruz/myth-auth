@@ -1,6 +1,5 @@
 <?php
 
-use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Test\CIUnitTestCase;
 use Mockery as m;
 use Mockery\MockInterface;
@@ -16,24 +15,21 @@ use Myth\Auth\Models\UserModel;
 final class LocalAuthenticateValidateTest extends CIUnitTestCase
 {
     protected MockInterface $userModel;
-    protected MockInterface $loginModel;
 
     /**
      * @var LocalAuthenticator
      */
     protected $auth;
 
-    protected IncomingRequest $request;
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->userModel  = m::mock(UserModel::class);
-        $this->loginModel = m::mock(LoginModel::class);
-        $this->auth       = Services::authentication('local', $this->userModel, $this->loginModel, false);
+        $this->userModel = m::mock(UserModel::class);
+        $loginModel      = m::mock(LoginModel::class);
+        $this->auth      = Services::authentication('local', $this->userModel, $loginModel, false);
 
-        $this->request = m::mock('CodeIgniter\HTTP\IncomingRequest');
-        Services::injectMock('CodeIgniter\HTTP\IncomingRequest', $this->request);
+        $request = m::mock('CodeIgniter\HTTP\IncomingRequest');
+        Services::injectMock('CodeIgniter\HTTP\IncomingRequest', $request);
     }
 
     protected function tearDown(): void

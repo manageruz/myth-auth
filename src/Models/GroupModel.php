@@ -91,7 +91,7 @@ class GroupModel extends Model
     /**
      * Returns an array of all groups that a user is a member of.
      *
-     * @return array[]
+     * @return list<array>
      */
     public function getGroupsForUser(int $userId)
     {
@@ -111,7 +111,7 @@ class GroupModel extends Model
     /**
      * Returns an array of all users that are members of a group.
      *
-     * @return array[]
+     * @return list<array>
      */
     public function getUsersForGroup(int $groupId)
     {

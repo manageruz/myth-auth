@@ -2,7 +2,6 @@
 
 namespace Myth\Auth\Authentication;
 
-use CodeIgniter\CodeIgniter;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Model;
 use Exception;
@@ -20,7 +19,7 @@ class AuthenticationBase
     protected $user;
 
     /**
-     * @var Model
+     * @var Model|null
      */
     protected $userModel;
 
@@ -69,8 +68,6 @@ class AuthenticationBase
      * Logs a user into the system.
      * NOTE: does not perform validation. All validation should
      * be done prior to using the login method.
-     *
-     * @param User $user
      *
      * @throws Exception
      */
@@ -220,29 +217,19 @@ class AuthenticationBase
         $this->loginModel->rememberUser($userID, $selector, hash('sha256', $validator), $expires);
 
         // Save it to the user's browser in a cookie.
-        $appConfig = config('App');
-        $response  = service('response');
-
-        // Replace cookie config values from cookie.php file on new versions of CI (v4.4.0 and above) for BC.
-        if (version_compare(CodeIgniter::CI_VERSION, '4.3.8', '>')) {
-            $cookieConfig              = config('Cookie');
-            $appConfig->cookieDomain   = $cookieConfig->domain;
-            $appConfig->cookiePath     = $cookieConfig->path;
-            $appConfig->cookiePrefix   = $cookieConfig->prefix;
-            $appConfig->cookieSecure   = $cookieConfig->secure;
-            $appConfig->cookieHTTPOnly = $cookieConfig->httponly;
-        }
+        $cookieConfig = config('Cookie');
+        $response     = service('response');
 
         // Create the cookie
         $response->setCookie(
-            'remember',      							// Cookie Name
-            $token,                         			// Value
-            $this->config->rememberLength,  			// # Seconds until it expires
-            $appConfig->cookieDomain,
-            $appConfig->cookiePath,
-            $appConfig->cookiePrefix,
-            $appConfig->cookieSecure,                   // Only send over HTTPS?
-            true                    					// Hide from Javascript?
+            'remember',                    // Cookie Name
+            $token,                        // Value
+            $this->config->rememberLength, // # Seconds until it expires
+            $cookieConfig->domain,
+            $cookieConfig->path,
+            $cookieConfig->prefix,
+            $cookieConfig->secure,         // Only send over HTTPS?
+            true,                          // Hide from Javascript?
         );
     }
 
@@ -268,28 +255,18 @@ class AuthenticationBase
         // Save it to the user's browser in a cookie.
         helper('cookie');
 
-        $appConfig = config('App');
-
-        // Replace cookie config values from cookie.php file on new versions of CI (v4.4.0 and above) for BC.
-        if (version_compare(CodeIgniter::CI_VERSION, '4.3.8', '>')) {
-            $cookieConfig              = config('Cookie');
-            $appConfig->cookieDomain   = $cookieConfig->domain;
-            $appConfig->cookiePath     = $cookieConfig->path;
-            $appConfig->cookiePrefix   = $cookieConfig->prefix;
-            $appConfig->cookieSecure   = $cookieConfig->secure;
-            $appConfig->cookieHTTPOnly = $cookieConfig->httponly;
-        }
+        $cookieConfig = config('Cookie');
 
         // Create the cookie
         set_cookie(
-            'remember',      						// Cookie Name
-            $selector . ':' . $validator, 				// Value
-            (string) $this->config->rememberLength, // # Seconds until it expires
-            $appConfig->cookieDomain,
-            $appConfig->cookiePath,
-            $appConfig->cookiePrefix,
-            $appConfig->cookieSecure,               // Only send over HTTPS?
-            true                                    // Hide from Javascript?
+            'remember',                    // Cookie Name
+            $selector . ':' . $validator,  // Value
+            $this->config->rememberLength, // # Seconds until it expires
+            $cookieConfig->domain,
+            $cookieConfig->path,
+            $cookieConfig->prefix,
+            $cookieConfig->secure,         // Only send over HTTPS?
+            true,                          // Hide from Javascript?
         );
     }
 

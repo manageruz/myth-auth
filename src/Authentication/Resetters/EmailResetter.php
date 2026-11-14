@@ -14,8 +14,6 @@ class EmailResetter extends BaseResetter implements ResetterInterface
 {
     /**
      * Sends a reset email
-     *
-     * @param User $user
      */
     public function send(?User $user = null): bool
     {

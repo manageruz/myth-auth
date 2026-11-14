@@ -286,8 +286,6 @@ class User extends Entity
      * Warns the developer it won't work, so they don't spend
      * hours tracking stuff down.
      *
-     * @param array $permissions
-     *
      * @return $this
      */
     public function setPermissions(?array $permissions = null)

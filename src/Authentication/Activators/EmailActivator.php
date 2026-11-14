@@ -14,8 +14,6 @@ class EmailActivator extends BaseActivator implements ActivatorInterface
 {
     /**
      * Sends an activation email
-     *
-     * @param User $user
      */
     public function send(?User $user = null): bool
     {

@@ -9,13 +9,18 @@ parameters:
 	excludePaths:
 		- src/Config/Routes.php
 		- src/Views/*
+	# Some patterns only match on some PHP versions or tool versions
+	reportUnmatchedIgnoredErrors: false
 	ignoreErrors:
 		- '#.+deprecated class Myth\\Auth\\Authorization\\(Group|Permission)Model.+#'
 		- '#.+Mockery.+#'
 		- '#Call to an undefined method .+::shouldReceive\(\)#'
 		- '#Call to an undefined static method Config\\Services::[A-Za-z]+\(\)#'
 		- '#Cannot access property [\$a-z_]+ on (array|object)#'
-		- '#Parameter \$user of method Myth\\Auth\\Authentication\\Passwords\\ValidatorInterface::check\(\) has typehint with deprecated class CodeIgniter\\Entity#'
+		# AuthTrait is public API for applications; the library itself does not use it
+		-
+			identifier: trait.unused
+			path: src/AuthTrait.php
 	universalObjectCratesClasses:
 		- CodeIgniter\Entity\Entity
 		- Faker\Generator

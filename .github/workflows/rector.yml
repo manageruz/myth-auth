@@ -26,11 +26,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0', '8.1']
+        php-versions: ['8.2', '8.3', '8.4']
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -44,10 +44,10 @@ jobs:
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
 
       - name: Cache composer dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}
@@ -61,7 +61,15 @@ jobs:
             composer update --no-progress --no-interaction --prefer-dist --optimize-autoloader
           fi
 
+      - name: Rector cache
+        uses: actions/cache@v6
+        with:
+          path: /tmp/rector
+          key: ${{ runner.os }}-rector-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-rector-
+
+      - name: Create Rector cache directory
+        run: mkdir -p /tmp/rector
+
       - name: Analyze for refactoring
-        run: |
-          composer global require --dev rector/rector:^0.14
-          rector process --dry-run --no-progress-bar
+        run: vendor/bin/rector process --dry-run --no-progress-bar

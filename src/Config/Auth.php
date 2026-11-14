@@ -98,7 +98,7 @@ class Auth extends BaseConfig
      *
      * Fields that are available to be used as credentials for login.
      *
-     * @var string[]
+     * @var list<string>
      */
     public $validFields = [
         'email',
@@ -121,7 +121,7 @@ class Auth extends BaseConfig
      * For example:
      *	 $personalFields = ['firstname', 'lastname'];
      *
-     * @var string[]
+     * @var list<string>
      */
     public $personalFields = [];
 
@@ -327,7 +327,7 @@ class Auth extends BaseConfig
      * You can add custom classes as long as they adhere to the
      * Password\ValidatorInterface.
      *
-     * @var string[]
+     * @var list<string>
      */
     public $passwordValidators = [
         'Myth\Auth\Authentication\Passwords\CompositionValidator',

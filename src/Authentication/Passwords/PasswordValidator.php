@@ -20,8 +20,6 @@ class PasswordValidator extends BaseValidator
     /**
      * Checks a password against all of the Validators specified
      * in `$passwordValidators` setting in Config\Auth.php.
-     *
-     * @param User $user
      */
     public function check(string $password, ?User $user = null): bool
     {

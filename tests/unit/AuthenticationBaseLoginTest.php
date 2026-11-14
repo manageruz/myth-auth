@@ -32,7 +32,7 @@ final class AuthenticationBaseLoginTest extends CIUnitTestCase
             'email'    => 'joe@example.com',
         ];
 
-        $this->loginModel->shouldReceive('insert')->once()->with(M::subset([
+        $this->loginModel->shouldReceive('insert')->once()->with(m::subset([
             'ip_address' => '0.0.0.0',
             'email'      => 'joe@example.com',
             'user_id'    => 12,

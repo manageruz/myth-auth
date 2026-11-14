@@ -14,11 +14,6 @@ final class FlatAuthorizationTest extends AuthTestCase
     protected $refresh = true;
 
     /**
-     * @var UserModel
-     */
-    protected $users;
-
-    /**
      * @var GroupModel
      */
     protected $groups;
@@ -34,12 +29,12 @@ final class FlatAuthorizationTest extends AuthTestCase
     {
         parent::setUp();
 
-        $this->users       = new UserModel();
+        $users             = new UserModel();
         $this->groups      = new GroupModel();
         $this->permissions = new PermissionModel();
 
         $this->auth = new FlatAuthorization($this->groups, $this->permissions);
-        $this->auth->setUserModel($this->users);
+        $this->auth->setUserModel($users);
 
         db_connect()->table('auth_groups_users')->truncate();
         cache()->clean();
@@ -342,7 +337,6 @@ final class FlatAuthorizationTest extends AuthTestCase
         $permission  = $this->createPermission();
         $permission2 = $this->createPermission();
 
-        $this->assertIsArray($this->permissions->getPermissionsForUser($user->id));
         $this->assertSame([], $this->permissions->getPermissionsForUser($user->id));
 
         $this->auth->addPermissionToUser($permission->id, $user->id); // user's permissions
