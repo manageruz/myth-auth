@@ -26,8 +26,8 @@ final class PasswordTest extends CIUnitTestCase
     {
         $hash = Password::hash('secret');
 
-        $config           = clone config('Auth');
-        $config->hashCost = $config->hashCost + 1;
+        $config = clone config('Auth');
+        $config->hashCost++;
         Factories::injectMock('Config', 'Auth', $config);
 
         $this->assertTrue(Password::needsRehash($hash, PASSWORD_BCRYPT));

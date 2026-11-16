@@ -24,8 +24,6 @@ class PwnedValidator extends BaseValidator implements ValidatorInterface
      * returns false if a match is found. Returns true if no match is found.
      * If true is returned the password will be passed to next validator.
      * If false is returned the validation process will be immediately stopped.
-     *
-     * @param Entity $user
      */
     public function check(string $password, ?Entity $user = null): bool
     {
@@ -40,7 +38,7 @@ class PwnedValidator extends BaseValidator implements ValidatorInterface
 
             $response = $client->get(
                 'range/' . $rangeHash,
-                ['headers' => ['Accept' => 'text/plain']]
+                ['headers' => ['Accept' => 'text/plain']],
             );
         } catch (HTTPException $e) {
             $exception = AuthException::forHIBPCurlFail($e);

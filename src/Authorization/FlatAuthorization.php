@@ -4,7 +4,6 @@ namespace Myth\Auth\Authorization;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Model;
-use Myth\Auth\Entities\User;
 use Myth\Auth\Models\UserModel;
 
 class FlatAuthorization implements AuthorizeInterface
@@ -143,7 +142,7 @@ class FlatAuthorization implements AuthorizeInterface
             return null;
         }
 
-        if (empty($userId) || ! is_numeric($userId)) {
+        if (empty($userId)) {
             return null;
         }
 
@@ -172,7 +171,7 @@ class FlatAuthorization implements AuthorizeInterface
      */
     public function addUserToGroup(int $userid, $group)
     {
-        if (empty($userid) || ! is_numeric($userid)) {
+        if (empty($userid)) {
             return null;
         }
 
@@ -211,7 +210,7 @@ class FlatAuthorization implements AuthorizeInterface
      */
     public function removeUserFromGroup(int $userId, $group)
     {
-        if (empty($userId) || ! is_numeric($userId)) {
+        if (empty($userId)) {
             return null;
         }
 
@@ -335,12 +334,10 @@ class FlatAuthorization implements AuthorizeInterface
             return false;
         }
 
-        /** @var User $user */
-        $permissions = $user->getPermissions();
-
-        if (! in_array($permissionId, $permissions, true)) {
-            $this->permissionModel->addPermissionToUser($permissionId, $user->id);
-        }
+        // The previous in_array() check compared the ID with permission names
+        // and was always false, so the permission was always added. That
+        // behaviour is kept here; avoiding duplicate rows is a separate fix.
+        $this->permissionModel->addPermissionToUser($permissionId, $user->id);
 
         Events::trigger('didAddPermissionToUser', $userId, $permissionId);
 
@@ -364,7 +361,7 @@ class FlatAuthorization implements AuthorizeInterface
             return false;
         }
 
-        if (empty($userId) || ! is_numeric($userId)) {
+        if (empty($userId)) {
             return null;
         }
 
@@ -393,7 +390,7 @@ class FlatAuthorization implements AuthorizeInterface
             return false;
         }
 
-        if (empty($userId) || ! is_numeric($userId)) {
+        if (empty($userId)) {
             return null;
         }
 

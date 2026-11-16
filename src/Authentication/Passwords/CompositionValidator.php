@@ -22,8 +22,6 @@ class CompositionValidator extends BaseValidator implements ValidatorInterface
      * Returns true when the password passes this test.
      * The password will be passed to any remaining validators.
      * False will immediately stop validation process
-     *
-     * @param Entity $user
      */
     public function check(string $password, ?Entity $user = null): bool
     {

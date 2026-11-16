@@ -3,6 +3,7 @@
 namespace Tests\Support;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Database\Seeder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Fabricator;
@@ -35,7 +36,7 @@ abstract class AuthTestCase extends CIUnitTestCase
     /**
      * The name of a seed file used for all tests within this test case.
      *
-     * @var string
+     * @var class-string<Seeder>
      */
     protected $seed = 'Tests\Support\Database\Seeds\AuthSeeder';
 

@@ -9,8 +9,6 @@ class UserActivator extends BaseActivator implements ActivatorInterface
     /**
      * Sends activation message to the user via specified class
      * in `$requireActivation` setting in Config\Auth.php.
-     *
-     * @param User $user
      */
     public function send(?User $user = null): bool
     {

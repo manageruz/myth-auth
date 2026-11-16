@@ -9,8 +9,6 @@ class UserResetter extends BaseResetter implements ResetterInterface
     /**
      * Sends reset message to the user via specified class
      * in `$activeResetter` setting in Config\Auth.php.
-     *
-     * @param User $user
      */
     public function send(?User $user = null): bool
     {

@@ -11,8 +11,6 @@ interface ActivatorInterface
 {
     /**
      * Send activation message to user
-     *
-     * @param User $user
      */
     public function send(?User $user = null): bool;
 

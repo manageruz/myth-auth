@@ -3,7 +3,6 @@
 namespace Myth\Auth\Language\de;
 
 return [
-
     // Exceptions
     'invalidModel'        => 'Das {0} Model muss geladen werden, bevor es genutzt werden kann.',
     'userNotFound'        => 'Der Benutzer mit der ID = {0, number} konnte nicht gefunden werden.',
@@ -99,5 +98,4 @@ return [
     'newPassword'               => 'Neues Passwort',
     'newPasswordRepeat'         => 'Neues Passwort wiederholen',
     'resetPassword'             => 'Passwort zurücksetzen',
-
 ];

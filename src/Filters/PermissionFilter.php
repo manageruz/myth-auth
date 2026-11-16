@@ -55,9 +55,10 @@ class PermissionFilter extends BaseFilter implements FilterInterface
      *
      * @param array|null $arguments
      *
-     * @return void
+     * @return ResponseInterface|null
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+        return null;
     }
 }

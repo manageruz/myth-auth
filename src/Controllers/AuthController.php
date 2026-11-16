@@ -372,7 +372,7 @@ class AuthController extends Controller
             $this->request->getPost('email'),
             $this->request->getPost('token'),
             $this->request->getIPAddress(),
-            (string) $this->request->getUserAgent()
+            (string) $this->request->getUserAgent(),
         );
 
         $rules = [
@@ -433,7 +433,7 @@ class AuthController extends Controller
         $users->logActivationAttempt(
             $this->request->getGet('token'),
             $this->request->getIPAddress(),
-            (string) $this->request->getUserAgent()
+            (string) $this->request->getUserAgent(),
         );
 
         $throttler = service('throttler');

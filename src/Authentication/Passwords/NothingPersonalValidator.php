@@ -16,8 +16,6 @@ class NothingPersonalValidator extends BaseValidator implements ValidatorInterfa
      * or the user's email. Otherwise, it returns false.
      * If true is returned the password will be passed to next validator.
      * If false is returned the validation process will be immediately stopped.
-     *
-     * @param Entity $user
      */
     public function check(string $password, ?Entity $user = null): bool
     {
@@ -111,8 +109,8 @@ class NothingPersonalValidator extends BaseValidator implements ValidatorInterfa
 
                     // look both ways in case password is subset of needle
                     if (
-                        strpos($haystack, $needle) !== false
-                        || strpos($needle, $haystack) !== false
+                        str_contains($haystack, $needle)
+                        || str_contains($needle, $haystack)
                     ) {
                         $valid = false;
                         break 2;

@@ -11,8 +11,6 @@ interface ResetterInterface
 {
     /**
      * Send reset message to user
-     *
-     * @param User $user
      */
     public function send(?User $user = null): bool;
 
